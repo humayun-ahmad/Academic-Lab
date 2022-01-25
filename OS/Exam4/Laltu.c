@@ -34,7 +34,7 @@ int main(){
 	
 	if (child_a == 0) {
 	    /* Child a code */
-	    //printf("child_a\n");
+	    
 	    execlp("./Ittu", "./Ittu", ch1, ch2, NULL);
 	    printf("Result : %s\n", str);
 	} else {
