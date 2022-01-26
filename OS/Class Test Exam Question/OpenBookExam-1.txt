@@ -1,0 +1,23 @@
+1. If one process finishes its task before its child processes what would happen?
+
+2. When the processor is switched from one process to another process in a single processor system:
+a)	Why does the OS process need to access process control block (PCB) ?
+b)	Mark the place when Process P0, P1 and OS process are in the idle state?
+c)	In a round-robin scheduling system, P0 and and P1 will have equal idle item.
+d)	Will the processor be ever in the idle state? Why?
+e)	Is it true that the idle time of the user process will increase if the number of user processes increases? Why?
+
+
+
+3. How many processes will be created if we run the following program, named ProcessCreation.c, in the following way after compilation? Why?
+
+$ gcc ProcessCreation.c -o ProcessCreation
+$ ./ProcessCreation I love to study Operating System
+
+#include <unistd.h>
+void main(int argc, char *argv[]){
+	for (int i = 0; i <argc;  i++)
+		fork();
+}
+
+4. As process executes, it changes state. How many processes can be in the New, Running, Waiting, Ready and Terminated state in a system having two processors? Why?
