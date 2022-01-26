@@ -7,34 +7,12 @@
 #include <assert.h>
 
 #include <stdlib.h>
-
-
-
-
-
 int result;
-
-
-
-
 
 struct thread_args *args = malloc (sizeof (struct thread_args));
 
-
-
-
-
-
-
-
-
 void Ittu(void *_args){
-
-	
-
 	struct thread_args *args = (struct thread_args *) _args;
-
-	
 
   	printf ("The sum is : %d\n", args->first + args->second);
 
