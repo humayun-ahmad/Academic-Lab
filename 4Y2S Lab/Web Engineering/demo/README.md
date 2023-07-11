@@ -18,3 +18,7 @@ Steps For Running this project
 	by --> http://localhost:8000/book-list
 
 Asibul Tutorial: https://www.youtube.com/@mdasibulhasanshanto601
+
+For creating Factory: `php artisan make:factory BookFactory --model=Book`
+
+For creating Seeder: `php artisan make:seeder BookSeeder`
