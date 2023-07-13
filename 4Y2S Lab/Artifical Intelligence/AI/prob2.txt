@@ -1,0 +1,55 @@
+import matplotlib.pyplot as plt
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# Load MNIST dataset
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+# Reshape and normalize images
+x_train = x_train.reshape(x_train.shape[0], 28, 28, 1) / 255.0
+x_test = x_test.reshape(x_test.shape[0], 28, 28, 1) / 255.0
+
+# Create a data generator for data augmentation
+datagen = ImageDataGenerator(rotation_range=10, width_shift_range=0.1,
+                             height_shift_range=0.1, shear_range=0.1, zoom_range=0.1)
+
+# Create the CNN model
+def create_model():
+    model = Sequential([
+        Conv2D(32, (3, 3), activation='relu', input_shape=(28, 28, 1)),
+        MaxPooling2D(pool_size=(3, 3), strides=(1, 1)),
+        Conv2D(64, (3, 3), activation='relu'),
+        MaxPooling2D(pool_size=(3, 3), strides=(1, 1)),
+        Flatten(),
+        Dense(64, activation='relu'),
+        Dense(10, activation='softmax')
+    ])
+
+    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
+    return model
+
+# Create and train the model on the original data
+model1 = create_model()
+history1 = model1.fit(x_train, y_train, epochs=10, validation_data=(x_test, y_test))
+
+# Create and train the model on the augmented data
+model2 = create_model()
+history2 = model2.fit(datagen.flow(x_train, y_train), epochs=10, validation_data=(x_test, y_test))
+
+# Evaluate both models
+_, accuracy1 = model1.evaluate(x_test, y_test)
+_, accuracy2 = model2.evaluate(x_test, y_test)
+
+# Print out the accuracies
+print(f'Accuracy of model trained on original data: {accuracy1 * 100}%')
+print(f'Accuracy of model trained on augmented data: {accuracy2 * 100}%')
+
+# Compare and plot the prediction accuracy of the two CNNs
+plt.figure(figsize=(12, 6))
+plt.plot(history1.history['accuracy'], label='Model trained on original data')
+plt.plot(history2.history['accuracy'], label='Model trained on augmented data')
+plt.legend()
+plt.show()
+
